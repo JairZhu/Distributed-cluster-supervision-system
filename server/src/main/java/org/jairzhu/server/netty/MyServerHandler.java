@@ -3,15 +3,16 @@ package org.jairzhu.server.netty;
 import com.alibaba.fastjson.JSON;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
-import org.jairzhu.server.dao.RecordDao;
 import org.jairzhu.server.domain.*;
+import org.jairzhu.server.mapper.RecordMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
-
-public class MyServerHandler extends ChannelInboundHandlerAdapter {
+public class  MyServerHandler extends ChannelInboundHandlerAdapter {
     private final Logger logger = LoggerFactory.getLogger(MyServerHandler.class);
 
     @Override

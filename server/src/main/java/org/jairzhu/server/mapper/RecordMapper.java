@@ -1,15 +1,20 @@
-package org.jairzhu.server.dao;
+package org.jairzhu.server.mapper;
 
 import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.jairzhu.server.domain.Record;
 
 import java.util.List;
 
-public interface RecordDao {
+@Mapper
+public interface RecordMapper {
     @Select("select * from record")
-    List<Record> findAll();
+    public List<Record> findAll();
 
     @Insert("insert into record(name, avgload, os, timestamp, cpunum) values(#{name}, #{avgload}, #{os}, #{timestamp}, #{cpunum})")
-    void saveRecord(Record record);
+    public void saveRecord(Record record);
+
+    @Select("select * from record where name = #{name}")
+    public Record getRecordByName(String name);
 }

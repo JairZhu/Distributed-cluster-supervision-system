@@ -13,9 +13,11 @@ import io.netty.handler.codec.Delimiters;
 import io.netty.handler.codec.string.StringDecoder;
 import io.netty.handler.codec.string.StringEncoder;
 import io.netty.util.CharsetUtil;
+import org.jairzhu.server.mapper.RecordMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -32,8 +34,13 @@ public class MyServer implements ApplicationContextAware {
     @Value("${serverIP}")
     private String ip;
 
+    @Autowired
+    private RecordMapper recordMapper;
+
     @PostConstruct
     public void start() throws InterruptedException {
+        System.out.println(recordMapper.getClass());
+
         logger.info("start server at " + port);
         EventLoopGroup bossGroup = new NioEventLoopGroup();
         EventLoopGroup workerGroup = new NioEventLoopGroup();
