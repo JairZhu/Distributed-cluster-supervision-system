@@ -4,7 +4,6 @@ import com.alibaba.fastjson.JSON;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import org.jairzhu.server.domain.*;
-import org.jairzhu.server.mapper.RecordMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +13,7 @@ import java.util.Date;
 
 public class  MyServerHandler extends ChannelInboundHandlerAdapter {
     private final Logger logger = LoggerFactory.getLogger(MyServerHandler.class);
+
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
@@ -35,6 +35,7 @@ public class  MyServerHandler extends ChannelInboundHandlerAdapter {
                 record.setOs(report.getOS());
                 record.setCpunum(report.getCpus());
                 record.setTimestamp(new Date());
+                Common.recordMapper.saveRecord(record);
                 break;
             }
         }
