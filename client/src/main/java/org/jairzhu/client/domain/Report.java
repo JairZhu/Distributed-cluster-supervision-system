@@ -2,13 +2,15 @@ package org.jairzhu.client.domain;
 
 import com.alibaba.fastjson.JSON;
 
+import java.util.Date;
 import java.util.Objects;
 
 public class Report {
     private String name;
-    private String OS;
-    private double load;
-    private int cpus;
+    private String os;
+    private Date timestamp;
+    private double avgload;
+    private int cpunum;
 
     @Override
     public String toString() {
@@ -20,12 +22,12 @@ public class Report {
         if (this == o) return true;
         if (!(o instanceof Report)) return false;
         Report report = (Report) o;
-        return Double.compare(report.load, load) == 0 && cpus == report.cpus && Objects.equals(name, report.name) && Objects.equals(OS, report.OS);
+        return Double.compare(report.avgload, avgload) == 0 && cpunum == report.cpunum && Objects.equals(name, report.name) && Objects.equals(os, report.os) && Objects.equals(timestamp, report.timestamp);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, OS, load, cpus);
+        return Objects.hash(name, os, timestamp, avgload, cpunum);
     }
 
     public String getName() {
@@ -36,27 +38,35 @@ public class Report {
         this.name = name;
     }
 
-    public String getOS() {
-        return OS;
+    public String getOs() {
+        return os;
     }
 
-    public void setOS(String OS) {
-        this.OS = OS;
+    public void setOs(String os) {
+        this.os = os;
     }
 
-    public double getLoad() {
-        return load;
+    public Date getTimestamp() {
+        return timestamp;
     }
 
-    public void setLoad(double load) {
-        this.load = load;
+    public void setTimestamp(Date timestamp) {
+        this.timestamp = timestamp;
     }
 
-    public int getCpus() {
-        return cpus;
+    public double getAvgload() {
+        return avgload;
     }
 
-    public void setCpus(int cpus) {
-        this.cpus = cpus;
+    public void setAvgload(double avgload) {
+        this.avgload = avgload;
+    }
+
+    public int getCpunum() {
+        return cpunum;
+    }
+
+    public void setCpunum(int cpunum) {
+        this.cpunum = cpunum;
     }
 }

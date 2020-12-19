@@ -60,7 +60,7 @@ public class ServerApplication implements CommandLineRunner {
                         }
                     });
             logger.info("server listening on port: " + port);
-            ChannelFuture channelFuture = bootstrap.bind(ip, port).sync();
+            ChannelFuture channelFuture = bootstrap.bind(port).sync();
             channelFuture.channel().closeFuture().sync();
         } finally {
             workerGroup.shutdownGracefully();

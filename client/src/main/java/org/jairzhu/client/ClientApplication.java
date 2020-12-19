@@ -13,10 +13,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import java.io.*;
 import java.net.Inet4Address;
 import java.net.Socket;
-import java.util.EventListener;
-import java.util.HashMap;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
 
 @SpringBootApplication
 public class ClientApplication implements CommandLineRunner {
@@ -33,18 +30,11 @@ public class ClientApplication implements CommandLineRunner {
         client.setName(Utils.getRandomName());
         client.setIP(localIP);
         client.setOnline(true);
-
-        Command registerCommand = new Command();
-        registerCommand.setType(CommandType.CLIENT_REGISTER);
-        HashMap<String, String> registerContents = new HashMap<>();
-        registerContents.put("client", client.toString());
-        registerCommand.setContents(registerContents);
-
-        Server server = new Server();
-        server.setIP(serverIP);
+        client.setCpu(Utils.getCPUNumber());
+        client.setOs(Utils.getOS());
 
         logger.info("Connect to: " + serverIP + ":" + serverPort);
-        Socket reportSocket = new Socket(server.getIP(), serverPort);
+        Socket reportSocket = new Socket(serverIP, serverPort);
         final BufferedWriter reportWriter = new BufferedWriter(new OutputStreamWriter(reportSocket.getOutputStream()));
 
         Command onlineCommand = new Command();
@@ -61,10 +51,10 @@ public class ClientApplication implements CommandLineRunner {
             public void run() {
                 Report report = new Report();
                 report.setName(client.getName());
-                report.setCpus(Utils.getCPUNumber());
-                report.setLoad(Utils.getAverageLoad());
-                report.setLoad(Utils.getAverageLoad());
-                report.setOS(Utils.getOS());
+                report.setCpunum(Utils.getCPUNumber());
+                report.setAvgload(Utils.getAverageLoad());
+                report.setOs(Utils.getOS());
+                report.setTimestamp(new Date());
 
                 Command reportCommand = new Command();
                 reportCommand.setType(CommandType.CLIENT_REPORT);

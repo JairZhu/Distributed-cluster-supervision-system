@@ -6,6 +6,24 @@ public class Client {
     private boolean isOnline;
     private String ip;
     private String name;
+    private String os;
+    private int cpu;
+
+    public String getOs() {
+        return os;
+    }
+
+    public void setOs(String os) {
+        this.os = os;
+    }
+
+    public int getCpu() {
+        return cpu;
+    }
+
+    public void setCpu(int cpu) {
+        this.cpu = cpu;
+    }
 
     @Override
     public String toString() {

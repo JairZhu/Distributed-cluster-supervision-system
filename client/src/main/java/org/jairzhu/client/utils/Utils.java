@@ -27,7 +27,7 @@ public class Utils {
 
     public static String getOS() {
         OperatingSystemMXBean operatingSystemMXBean = (OperatingSystemMXBean) ManagementFactory.getOperatingSystemMXBean();
-        return operatingSystemMXBean.getArch() + operatingSystemMXBean.getName() + operatingSystemMXBean.getVersion();
+        return operatingSystemMXBean.getName();
     }
 
     public static double getAverageLoad() {

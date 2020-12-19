@@ -29,21 +29,28 @@ public class  MyServerHandler extends ChannelInboundHandlerAdapter {
             case CommandType.CLIENT_REPORT: {
                 Report report = JSON.parseObject(command.getContents().get("report"), Report.class);
                 System.out.println(report);
-                Record record = new Record();
-                record.setAvgload(report.getLoad());
-                record.setName(report.getName());
-                record.setOs(report.getOS());
-                record.setCpunum(report.getCpus());
-                record.setTimestamp(new Date());
-                Common.recordMapper.saveRecord(record);
+                Common.recordMapper.saveRecord(report);
                 break;
             }
+        }
+        if (!Common.clients.getClients().containsKey(client.getName())
+                || !Common.clients.getClients().get(client.getName()).isOnline()) {
+            ctx.close();
         }
     }
 
 
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+        String address = ctx.channel().remoteAddress().toString();
+        address = address.substring(1, address.indexOf(':'));
+        logger.info("caught exception: " + address + "远程主机强迫关闭了一个现有的连接");
+        for (String key: Common.clients.getClients().keySet()) {
+            if (Common.clients.getClients().get(key).getIP().equals(address)) {
+                logger.info(address + "主机offline");
+                Common.clients.getClients().get(key).setOnline(false);
+            }
+        }
         cause.printStackTrace();
         ctx.close();
     }
