@@ -1,27 +1,27 @@
 <template>
-  <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
-    <el-form-item label="IP地址" prop="ip">
-      <el-input v-model="ruleForm.ip"></el-input>
-    </el-form-item>
-    <el-form-item label="客户端名称" prop="name">
-      <el-input v-model="ruleForm.name"></el-input>
-    </el-form-item>
-    <el-form-item label="CPU核数" prop="cpu">
-      <el-input v-model="ruleForm.cpu"></el-input>
-    </el-form-item>
-    <el-form-item label="操作系统" prop="os">
-      <el-select v-model="ruleForm.os" placeholder="请选择操作系统">
-        <el-option label="Windows" value="Windows"></el-option>
-        <el-option label="CentOS" value="CentOS"></el-option>
-        <el-option label="Ubuntu" value="Ubuntu"></el-option>
-        <el-option label="macOS" value="macOS"></el-option>
-      </el-select>
-    </el-form-item>
-    <el-form-item>
-      <el-button type="primary" @click="submitForm('ruleForm')">立即创建</el-button>
-      <el-button @click="resetForm('ruleForm')">重置</el-button>
-    </el-form-item>
-  </el-form>
+    <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+      <el-form-item label="IP地址" prop="ip">
+        <el-input v-model="ruleForm.ip"></el-input>
+      </el-form-item>
+      <el-form-item label="客户端名称" prop="name">
+        <el-input v-model="ruleForm.name"></el-input>
+      </el-form-item>
+      <el-form-item label="CPU核数" prop="cpu">
+        <el-input v-model="ruleForm.cpu"></el-input>
+      </el-form-item>
+      <el-form-item label="操作系统" prop="os">
+        <el-select v-model="ruleForm.os" placeholder="请选择操作系统">
+          <el-option label="Windows" value="Windows"></el-option>
+          <el-option label="CentOS" value="CentOS"></el-option>
+          <el-option label="Ubuntu" value="Ubuntu"></el-option>
+          <el-option label="macOS" value="macOS"></el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item>
+        <el-button type="primary" @click="submitForm('ruleForm')">立即创建</el-button>
+        <el-button @click="resetForm('ruleForm')">重置</el-button>
+      </el-form-item>
+    </el-form>
 </template>
 
 <script>

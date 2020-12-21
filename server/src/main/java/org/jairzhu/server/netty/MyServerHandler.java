@@ -44,7 +44,6 @@ public class  MyServerHandler extends ChannelInboundHandlerAdapter {
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
         String address = ctx.channel().remoteAddress().toString();
         address = address.substring(1, address.indexOf(':'));
-        logger.info("caught exception: " + address + "远程主机强迫关闭了一个现有的连接");
         for (String key: Common.clients.getClients().keySet()) {
             if (Common.clients.getClients().get(key).getIP().equals(address)) {
                 logger.info(address + "主机offline");
