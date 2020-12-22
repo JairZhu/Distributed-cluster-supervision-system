@@ -2,6 +2,7 @@ package org.jairzhu.server.controller;
 
 import com.alibaba.fastjson.JSON;
 import org.jairzhu.server.domain.Client;
+import org.jairzhu.server.domain.Clients;
 import org.jairzhu.server.domain.Common;
 import org.jairzhu.server.domain.Report;
 import org.jairzhu.server.mapper.RecordMapper;
@@ -28,13 +29,11 @@ public class ClientsController {
     @ResponseBody
     public String getClientsList() {
         String response = JSON.toJSONString(Common.clients.getClients().values());
-        logger.info("响应clients的请求："+response);
         return response;
     }
 
     @PostMapping("/saveClient")
     public void saveClient(@RequestBody Client client) throws Exception{
-        logger.info("收到：" + client.toString());
         client.setOnline(true);
         Common.clients.getClients().put(client.getName(), client);
         //TODO: 开辟新线程运行client代码
@@ -56,6 +55,17 @@ public class ClientsController {
     @ResponseBody
     public String getHistoryClientReport() {
         List<Report> reports = Common.recordMapper.findAll();
+        return JSON.toJSONString(reports);
+    }
+
+    @RequestMapping("/realTimeClientsReport")
+    @ResponseBody
+    public String getRealTimeClientsReport() {
+        List<Report> reports = new ArrayList<>();
+        for (String key: Common.clients.getClients().keySet()) {
+            if (Common.clients.getClients().get(key).isOnline())
+               reports.addAll(Common.recordMapper.getRecordByName(Common.clients.getClients().get(key).getName()));
+        }
         return JSON.toJSONString(reports);
     }
 }

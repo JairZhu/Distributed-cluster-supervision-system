@@ -1,6 +1,6 @@
 <template>
-  <div >
-      <div id="main" style="width: 800px;height:400px;"></div>
+  <div>
+    <div v-for="value in divList" :id="value" style="width: 800px;height:400px;"></div>
   </div>
 </template>
 
@@ -10,6 +10,11 @@ import echarts from "echarts";
 
 export default {
   name: "HistoryGraph",
+  data() {
+    return {
+      divList: []
+    }
+  },
   mounted() {
     //格式化Date类
     Date.prototype.Format = function (fmt) {
@@ -46,14 +51,18 @@ export default {
       console.log("数据装载完毕");
       console.log(nameList);
       for (let key in nameList) {
-        console.log("调用drawLine方法");
-        this.drawLine(key, nameList[key]["timestamp"], nameList[key]["avgload"]);
+        this.divList.push(key);
       }
+      //网页加载好后document.getElementById才能找到相应的元素
+      this.$nextTick(function () {
+        for (let key in nameList)
+          this.drawLine(key, nameList[key]["timestamp"], nameList[key]["avgload"]);
+      })
     });
   },
   methods: {
     drawLine(name, timestamp, avgload) {
-      var myChart = echarts.init(document.getElementById('main'));
+      var myChart = echarts.init(document.getElementById(name));
       var option = {
         title: {
           text: name + " 系统历史负载"
