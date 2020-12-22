@@ -53,11 +53,9 @@ public class ClientsController {
     }
 
     @RequestMapping("/historyClientsReport")
+    @ResponseBody
     public String getHistoryClientReport() {
         List<Report> reports = Common.recordMapper.findAll();
-        for (Report report: reports) {
-            System.out.println(report.toString());
-        }
         return JSON.toJSONString(reports);
     }
 }

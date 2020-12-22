@@ -1,5 +1,7 @@
 <template>
-  <div id="main" style="width: 600px;height:400px;"></div>
+  <div >
+      <div id="main" style="width: 800px;height:400px;"></div>
+  </div>
 </template>
 
 <script>
@@ -9,31 +11,61 @@ import echarts from "echarts";
 export default {
   name: "HistoryGraph",
   mounted() {
-    this.$http.get("http://localhost:8081/historyClientsReport").then(res=>{
-      console.log(res);
-    });
+    //格式化Date类
+    Date.prototype.Format = function (fmt) {
+      var o = {
+        "M+": this.getMonth() + 1, //月份
+        "d+": this.getDate(), //日
+        "h+": this.getHours(), //小时
+        "m+": this.getMinutes(), //分
+        "s+": this.getSeconds(), //秒
+        "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+        "S": this.getMilliseconds() //毫秒
+      };
+      if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+      for (var k in o)
+        if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+      return fmt;
+    }
 
-    this.drawLine();
+    let nameList = {};
+    this.$http.get("http://localhost:8081/historyClientsReport").then(res=>{
+      console.log("从后端get数据");
+      for (let i = 0; i < res.data.length; ++i) {
+        let name = res.data[i].name
+        if (!nameList.hasOwnProperty(name)) {
+          nameList[name] = {
+            "avgload": [],
+            "timestamp": []
+          };
+        }
+        nameList[name]["avgload"].push(res.data[i].avgload);
+        let time = (new Date(res.data[i].timestamp)).Format("yyyy-MM-dd hh:mm:ss");
+        nameList[name]["timestamp"].push(time);
+      }
+      console.log("数据装载完毕");
+      console.log(nameList);
+      for (let key in nameList) {
+        console.log("调用drawLine方法");
+        this.drawLine(key, nameList[key]["timestamp"], nameList[key]["avgload"]);
+      }
+    });
   },
   methods: {
-    drawLine() {
+    drawLine(name, timestamp, avgload) {
       var myChart = echarts.init(document.getElementById('main'));
       var option = {
         title: {
-          text: "标题"
-        },
-        tooltip: {},
-        legend: {
-          data:['销量']
+          text: name + " 系统历史负载"
         },
         xAxis: {
-          data: ["衬衫","羊毛衫","雪纺衫","裤子","高跟鞋","袜子"]
+          data: timestamp
         },
-        yAxis: {},
+        yAxis: {
+        },
         series: [{
-          name: '销量',
-          type: 'line',
-          data: [5, 20, 36, 10, 10, 20]
+          data: avgload,
+          type: 'line'
         }]
       };
       myChart.setOption(option);
