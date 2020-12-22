@@ -13,6 +13,8 @@ import io.netty.handler.codec.Delimiters;
 import io.netty.handler.codec.string.StringDecoder;
 import io.netty.handler.codec.string.StringEncoder;
 import io.netty.util.CharsetUtil;
+import org.jairzhu.server.domain.Client;
+import org.jairzhu.server.domain.Clients;
 import org.jairzhu.server.domain.Common;
 import org.jairzhu.server.mapper.RecordMapper;
 import org.jairzhu.server.netty.MyServerHandler;
@@ -24,6 +26,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.util.List;
+
 
 @SpringBootApplication
 public class ServerApplication implements CommandLineRunner {
@@ -31,8 +35,7 @@ public class ServerApplication implements CommandLineRunner {
     private final Logger logger = LoggerFactory.getLogger(ServerApplication.class);
     @Value("${serverPort}")
     private int port;
-    @Value("${serverIP}")
-    private String ip;
+
 
     @Autowired
     private RecordMapper recordMapper;
@@ -40,6 +43,13 @@ public class ServerApplication implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         Common.recordMapper = recordMapper;
+
+        List<Client> clientList = recordMapper.findAllClients();
+
+        for (Client client: clientList) {
+            client.setOnline(false);
+            Common.clients.getClients().put(client.getName(), client);
+        }
 
         logger.info("start server at " + port);
         EventLoopGroup bossGroup = new NioEventLoopGroup();

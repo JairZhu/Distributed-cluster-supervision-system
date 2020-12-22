@@ -54,6 +54,7 @@ public class ClientApplication implements CommandLineRunner {
                 report.setCpunum(Utils.getCPUNumber());
                 report.setAvgload(Utils.getAverageLoad());
                 report.setOs(Utils.getOS());
+                report.setIp(client.getIP());
                 report.setTimestamp(new Date());
 
                 Command reportCommand = new Command();

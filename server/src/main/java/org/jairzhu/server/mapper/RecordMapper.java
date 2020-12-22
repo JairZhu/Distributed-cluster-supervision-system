@@ -10,13 +10,13 @@ import java.util.List;
 
 @Mapper
 public interface RecordMapper {
-    @Select("select name, os, cpunum from record")
+    @Select("select name, os, cpunum, ip from record")
     public List<Client> findAllClients();
 
     @Select("select * from record")
     public List<Report> findAll();
 
-    @Insert("insert into record(name, avgload, os, timestamp, cpunum) values(#{name}, #{avgload}, #{os}, #{timestamp}, #{cpunum})")
+    @Insert("insert into record(name, avgload, os, timestamp, cpunum, ip) values(#{name}, #{avgload}, #{os}, #{timestamp}, #{cpunum}, #{ip})")
     public void saveRecord(Report record);
 
     @Select("select * from record where name = #{name}")

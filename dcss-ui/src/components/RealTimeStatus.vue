@@ -51,7 +51,12 @@ export default {
   name: "RealTimeStatus",
   methods: {
     handleClick(row) {
-      console.log(row);
+      if (row.online) {
+        this.$router.push("/realTimeGraph");
+      }
+      else {
+        this.$router.push("/historyGraph");
+      }
     },
     handleEdit(row) {
       this.$http.post("http://localhost:8081/editClient", row);

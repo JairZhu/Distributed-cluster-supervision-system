@@ -1,8 +1,5 @@
 <template>
   <div>
-    <div id="None" style="text-align: center">
-      <span>暂无数据</span>
-    </div>
     <div v-for="value in divList" :id="value" style="width: 800px;height:400px;"></div>
   </div>
 </template>
@@ -50,13 +47,6 @@ export default {
           let time = (new Date(res.data[i].timestamp)).Format("yyyy-MM-dd hh:mm:ss");
           nameList[name]["timestamp"].push(time);
         }
-        let none = document.getElementById("None");
-        if (!this.isEmpty(nameList)) {
-          none.setAttribute("style", "display:none");
-        }
-        else {
-          none.setAttribute("style", "display:none");
-        }
         for (let key in nameList) {
           this.divList.push(key);
         }
@@ -86,12 +76,6 @@ export default {
       };
       myChart.setOption(option);
     },
-    isEmpty(obj) {
-      for (let i in obj) {
-        return false;
-      }
-      return true;
-    }
   }
 }
 </script>

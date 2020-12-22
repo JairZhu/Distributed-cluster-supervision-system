@@ -11,6 +11,7 @@ public class Report {
     private Date timestamp;
     private double avgload;
     private int cpunum;
+    private String ip;
 
     @Override
     public String toString() {
@@ -22,12 +23,12 @@ public class Report {
         if (this == o) return true;
         if (!(o instanceof Report)) return false;
         Report report = (Report) o;
-        return Double.compare(report.avgload, avgload) == 0 && cpunum == report.cpunum && Objects.equals(name, report.name) && Objects.equals(os, report.os) && Objects.equals(timestamp, report.timestamp);
+        return Double.compare(report.avgload, avgload) == 0 && cpunum == report.cpunum && Objects.equals(name, report.name) && Objects.equals(os, report.os) && Objects.equals(timestamp, report.timestamp) && Objects.equals(ip, report.ip);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, os, timestamp, avgload, cpunum);
+        return Objects.hash(name, os, timestamp, avgload, cpunum, ip);
     }
 
     public String getName() {
@@ -68,5 +69,13 @@ public class Report {
 
     public void setCpunum(int cpunum) {
         this.cpunum = cpunum;
+    }
+
+    public String getIp() {
+        return ip;
+    }
+
+    public void setIp(String ip) {
+        this.ip = ip;
     }
 }

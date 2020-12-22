@@ -50,7 +50,7 @@ public class  MyServerHandler extends ChannelInboundHandlerAdapter {
                 Common.clients.getClients().get(key).setOnline(false);
             }
         }
-        cause.printStackTrace();
+//        cause.printStackTrace();
         ctx.close();
     }
 }

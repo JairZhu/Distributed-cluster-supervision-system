@@ -7,7 +7,7 @@ public class Client {
     private String ip;
     private String name;
     private String os;
-    private int cpu;
+    private int cpunum;
 
     public String getOs() {
         return os;
@@ -18,11 +18,11 @@ public class Client {
     }
 
     public int getCpu() {
-        return cpu;
+        return cpunum;
     }
 
     public void setCpu(int cpu) {
-        this.cpu = cpu;
+        this.cpunum = cpu;
     }
 
     @Override
