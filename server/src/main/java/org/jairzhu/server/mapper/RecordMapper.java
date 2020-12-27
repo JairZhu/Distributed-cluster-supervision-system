@@ -1,5 +1,6 @@
 package org.jairzhu.server.mapper;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -21,4 +22,7 @@ public interface RecordMapper {
 
     @Select("select * from record where name = #{name}")
     public List<Report> getRecordByName(String name);
+
+    @Delete("delete from record where name = #{name}")
+    public void deleteRecordByName(String name);
 }

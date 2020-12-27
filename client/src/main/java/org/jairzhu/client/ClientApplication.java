@@ -26,15 +26,19 @@ public class ClientApplication implements CommandLineRunner {
 
     @Override
     public void run(String... arg) throws Exception {
-        String localIP = Inet4Address.getLocalHost().getHostAddress();
         client.setName(Utils.getRandomName());
-        client.setIP(localIP);
         client.setOnline(true);
         client.setCpu(Utils.getCPUNumber());
         client.setOs(Utils.getOS());
 
         logger.info("Connect to: " + serverIP + ":" + serverPort);
         Socket reportSocket = new Socket(serverIP, serverPort);
+
+        String address = reportSocket.getLocalAddress().toString();
+        address = address.substring(1) + ':' + reportSocket.getLocalPort();
+        client.setIP(address);
+        logger.info("local host: " + address);
+
         final BufferedWriter reportWriter = new BufferedWriter(new OutputStreamWriter(reportSocket.getOutputStream()));
 
         Command onlineCommand = new Command();

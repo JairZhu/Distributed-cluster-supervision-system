@@ -32,28 +32,31 @@ export default {
       return fmt;
     }
 
-    let nameList = {};
-    this.$http.get("http://localhost:8081/realTimeClientsReport").then(res=> {
-      for (let i = 0; i < res.data.length; ++i) {
-        let name = res.data[i].name
-        if (!nameList.hasOwnProperty(name)) {
-          nameList[name] = {
-            "avgload": [],
-            "timestamp": []
-          };
+    this.timeout = setInterval( () => {
+      let nameList = {};
+      this.$http.get("http://localhost:8081/realTimeClientsReport").then(res=> {
+        for (let i = 0; i < res.data.length; ++i) {
+          let name = res.data[i].name
+          if (!nameList.hasOwnProperty(name)) {
+            nameList[name] = {
+              "avgload": [],
+              "timestamp": []
+            };
+          }
+          nameList[name]["avgload"].push(res.data[i].avgload);
+          let time = (new Date(res.data[i].timestamp)).Format("yyyy-MM-dd hh:mm:ss");
+          nameList[name]["timestamp"].push(time);
         }
-        nameList[name]["avgload"].push(res.data[i].avgload);
-        let time = (new Date(res.data[i].timestamp)).Format("yyyy-MM-dd hh:mm:ss");
-        nameList[name]["timestamp"].push(time);
-      }
-      for (let key in nameList) {
-        this.divList.push(key);
-      }
-      this.$nextTick(function () {
-        for (let key in nameList)
-          this.drawLine(key, nameList[key]["timestamp"], nameList[key]["avgload"]);
-      })
-    });
+        console.log(nameList);
+        for (let key in nameList) {
+          this.divList.push(key);
+        }
+        this.$nextTick(function () {
+          for (let key in nameList)
+            this.drawLine(key, nameList[key]["timestamp"], nameList[key]["avgload"]);
+        })
+      });
+    }, 1000);
   },
   methods: {
     drawLine(name, timestamp, avgload) {

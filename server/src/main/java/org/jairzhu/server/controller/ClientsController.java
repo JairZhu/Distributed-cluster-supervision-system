@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.jairzhu.server.domain.Common.recordMapper;
 
 @Controller
 @CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -49,6 +48,7 @@ public class ClientsController {
     public void deleteClient(@RequestBody Client client) throws Exception {
         String name = client.getName();
         Common.clients.getClients().remove(name);
+        Common.recordMapper.deleteRecordByName(name);
     }
 
     @RequestMapping("/historyClientsReport")
