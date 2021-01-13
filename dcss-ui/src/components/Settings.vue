@@ -59,7 +59,7 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           console.log(this.ruleForm);
-          this.$http.post("http://localhost:8081/saveClient", this.ruleForm);
+          this.$http.post("http://localhost:8011/saveClient", this.ruleForm);
         } else {
           console.log('error submit!!');
           return false;

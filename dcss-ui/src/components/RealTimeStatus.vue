@@ -59,14 +59,14 @@ export default {
       }
     },
     handleEdit(row) {
-      this.$http.post("http://localhost:8081/editClient", row);
+      this.$http.post("http://localhost:8011/editClient", row);
       location.reload();
     },
     handlePrint() {
       window.print();
     },
     handleDelete(row) {
-      this.$http.post("http://localhost:8081/deleteClient", row);
+      this.$http.post("http://localhost:8011/deleteClient", row);
       location.reload();
     },
   },
@@ -76,7 +76,7 @@ export default {
     }
   },
   created() {
-    this.$http.get("http://localhost:8081/clients").then(res=>{
+    this.$http.get("http://localhost:8011/clients").then(res=>{
       console.log(res.data);
       this.tableData = res.data;
     })

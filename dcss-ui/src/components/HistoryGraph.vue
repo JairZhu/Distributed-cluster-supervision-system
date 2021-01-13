@@ -34,7 +34,7 @@ export default {
     }
 
     let nameList = {};
-    this.$http.get("http://localhost:8081/historyClientsReport").then(res=>{
+    this.$http.get("http://localhost:8011/historyClientsReport").then(res=>{
       console.log("从后端get数据");
       for (let i = 0; i < res.data.length; ++i) {
         let name = res.data[i].name

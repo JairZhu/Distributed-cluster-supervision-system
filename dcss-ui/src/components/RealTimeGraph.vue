@@ -34,7 +34,7 @@ export default {
 
     this.timeout = setInterval( () => {
       let nameList = {};
-      this.$http.get("http://localhost:8081/realTimeClientsReport").then(res=> {
+      this.$http.get("http://localhost:8011/realTimeClientsReport").then(res=> {
         for (let i = 0; i < res.data.length; ++i) {
           let name = res.data[i].name
           if (!nameList.hasOwnProperty(name)) {
